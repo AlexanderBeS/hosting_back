@@ -4,58 +4,56 @@ const config = require('../config/config.js')
 const jwt = require('jsonwebtoken')
 const error = require('../modules/services.js').makeError
 
-exports.loginValidation = checkSchema({
-  email: {
-    in: ['body'],
-    errorMessage: 'Email is wrong',
-    isEmail: true,
-    isEmpty: false
-  },
-  password: {
-    in: ['body'],
-    isLength: {
-      errorMessage: 'Password should be at least 7 chars long',
-      options: { min: 5 }
-    },
-    isEmpty: false
-  }
-})
 
-exports.login = (req, res, next) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return next(error(422, null, errors.array()))
-  }
-  passport.authenticate('login', (err, user, info) => {
-    if (err) return next(error(500, err.message))
-    if (!user) {
-      return next(error(info.code, info.message))
-    }
-    const email = user.email
-    req.logIn(user, err => {
-      if (err) {
-        return next(err)
-      }
-      const token = jwt.sign({ email, exp: Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60 }, config.jwt.secret)
-      const obj = {
-        auth: true,
-        token: token,
-        user: user
-      }
-      res.status(200).json(obj)
-    })
-  })(req, res, next)
-}
 
-exports.checkAuth = (req, res, next) => {
-  res.status(200).send('OK')
-}
 
-exports.logout = (req, res, next) => {
-  try {
-    req.logOut()
-    res.send('logout')
-  } catch (e) {
-    next(error(500, 'Error logout'))
-  }
-}
+
+
+
+
+exports.getUser = (req, res, next) => {
+  User.findByPk(req.userId)
+      .then(user => {
+        if (!user) {
+          const error = new Error('User not found.');
+          error.statusCode = 404;
+          throw error;
+        }
+        userObj = {
+          "id": user.id,
+          "name": user.name,
+          "email": user.email,
+          "createdAt": user.createdAt,
+        };
+        res.status(200).json({ user: userObj });
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
+};
+
+exports.updateUserName = (req, res, next) => {
+  const newName = req.body.name;
+  User.findByPk(req.userId)
+      .then(user => {
+        if (!user) {
+          const error = new Error('User not found.');
+          error.statusCode = 404;
+          throw error;
+        }
+        user.name = newName;
+        return user.save();
+      })
+      .then(result => {
+        res.status(200).json({ message: 'User updated.' });
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
+};

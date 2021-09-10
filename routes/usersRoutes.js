@@ -1,13 +1,22 @@
 const express = require('express')
-const customersController = require('../controllers/usersController.js')
-const isAuthenticate = require('../modules/middleware/isAuthenticate.js')
+const { body } = require('express-validator');
+const usersController = require('../controllers/usersController.js')
+const isAuth = require('../middleware/is-auth');
 
-const usersRouter = express.Router()
+const router = express.Router()
 
-const { loginValidation, login, logout, checkAuth } = customersController
+//router.get('/user', isAuth, authController.getUser); //me
 
-usersRouter.post('/login', loginValidation, login)
-usersRouter.use('/authAdmin', isAuthenticate, checkAuth)
-usersRouter.get('/logout', logout)
+router.patch(
+  '/user/name',
+  isAuth,
+  [
+    body('name')
+      .trim()
+      .not()
+      .isEmpty()
+  ],
+    usersController.updateUserName
+);
 
-module.exports = usersRouter
+module.exports = router

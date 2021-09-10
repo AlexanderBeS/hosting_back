@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -26,7 +26,7 @@ exports.signup = (req, res, next) => {
       return user.save();
     })
     .then(result => {
-      res.status(201).json({ message: 'User created!', userId: result._id });
+      res.status(201).json({ message: 'User created!', userId: result.id });
     })
     .catch(err => {
       if (!err.statusCode) {
@@ -40,10 +40,10 @@ exports.login = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   let loadedUser;
-  User.findOne({ email: email })
+  User.findOne( {where: { email: email }})
     .then(user => {
       if (!user) {
-        const error = new Error('A user with this email could not be found.');
+        const error = new Error(); //'A user with this email could not be found.'
         error.statusCode = 401;
         throw error;
       }
@@ -52,19 +52,19 @@ exports.login = (req, res, next) => {
     })
     .then(isEqual => {
       if (!isEqual) {
-        const error = new Error('Wrong password!');
-        error.statusCode = 401;
+        const error = new Error(); //'Wrong password!'
+        error.code = 401;
         throw error;
       }
       const token = jwt.sign(
         {
           email: loadedUser.email,
-          userId: loadedUser._id.toString()
+          userId: loadedUser.id.toString()
         },
         'somesupersecretsecret',
         { expiresIn: '1h' }
       );
-      res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+      res.status(200).json({ token: token, userId: loadedUser.id.toString() });
     })
     .catch(err => {
       if (!err.statusCode) {
@@ -74,43 +74,18 @@ exports.login = (req, res, next) => {
     });
 };
 
-exports.getUserStatus = (req, res, next) => {
-  User.findById(req.userId)
-    .then(user => {
-      if (!user) {
-        const error = new Error('User not found.');
-        error.statusCode = 404;
-        throw error;
-      }
-      res.status(200).json({ status: user.status });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
-    });
-};
+exports.logout = (req, res, next) => {
+    try {
+        req.logOut()
+        res.status(200);
+    } catch (e) {
+        error = new Error();
+        error.code = 500;
+        error.message =  'Error logout';
+        next(error);
+    }
+}
 
-exports.updateUserStatus = (req, res, next) => {
-  const newStatus = req.body.status;
-  User.findById(req.userId)
-    .then(user => {
-      if (!user) {
-        const error = new Error('User not found.');
-        error.statusCode = 404;
-        throw error;
-      }
-      user.status = newStatus;
-      return user.save();
-    })
-    .then(result => {
-      res.status(200).json({ message: 'User updated.' });
-    })
-    .catch(err => {
-      if (!err.statusCode) {
-        err.statusCode = 500;
-      }
-      next(err);
-    });
-};
+exports.checkAuth = (req, res) => {
+    res.status(200).send('OK')
+}

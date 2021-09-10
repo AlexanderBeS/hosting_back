@@ -1,5 +1,4 @@
 module.exports = function (err, req, res, next) {
-  console.log(err)
   if (err.code) {
     if (err.payload) {
       let result = 'Incorrect fields: '
@@ -12,9 +11,10 @@ module.exports = function (err, req, res, next) {
           }
         }
       })
+
       return res.status(err.code).json(result)
     }
-    return res.status(err.code).json(err.message)
+    return res.status(err.code).send(err.message)
   }
   res.send(err)
 }

@@ -10,7 +10,7 @@ const cors = require('cors')
 const pathToStatic = path.join(__dirname, '../../dist')
 
 const usersRouter = require('./routes/usersRoutes.js')
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/authRoutes');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
