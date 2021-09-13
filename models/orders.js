@@ -4,14 +4,14 @@ const User = require('../models/users');
 const Tariff = require('../models/hostingTariffs');
 
 const Order = db.define('orders', {
-        user_id: {
-            type: Sequelize.NUMBER,
-            allowNull: false,
-        },
-        tariff_id: {
-            type: Sequelize.NUMBER,
-            allowNull: false,
-        },
+        // user_id: {
+        //     type: Sequelize.NUMBER,
+        //     allowNull: false,
+        // },
+        // tariff_id: {
+        //     type: Sequelize.NUMBER,
+        //     allowNull: false,
+        // },
     },
     {
         createdAt: true,
@@ -19,18 +19,5 @@ const Order = db.define('orders', {
     }
 )
 
-Order.belongsTo(User, {as: 'Order', foreignKey: 'user_id'});
-
-Order.belongsTo(Tariff, {
-    foreignKey: 'tariff_id'
-})
-
-User.hasOne(Order, {
-    foreignKey: 'user_id'
-});
-
-Tariff.hasMany(Order, {
-    foreignKey: 'tariff_id'
-})
 
 module.exports = Order

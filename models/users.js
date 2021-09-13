@@ -34,11 +34,5 @@ User.validPassword = (password, passwordFromDb) => {
     return (password === passwordFromDb)
 }
 
-User.hasOne(Order, {
-    foreignKey: 'order_id'
-})
-
-
-
 
 module.exports = User

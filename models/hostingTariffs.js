@@ -32,4 +32,5 @@ const hostingTariff = db.define('hosting_tariffs', {
         updatedAt: true
     })
 
+
 module.exports = hostingTariff
