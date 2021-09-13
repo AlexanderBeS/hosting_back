@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const config = require('../config/config.js')
+let secretKey = config.jwt_secret;
 
 const User = require('../models/users');
 
@@ -61,7 +63,7 @@ exports.login = (req, res, next) => {
           email: loadedUser.email,
           userId: loadedUser.id.toString()
         },
-        'somesupersecretsecret',
+          secretKey,
         { expiresIn: '1h' }
       );
       res.status(200).json({ token: token, userId: loadedUser.id.toString() });

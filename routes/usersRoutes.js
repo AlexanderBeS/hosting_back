@@ -1,14 +1,17 @@
 const express = require('express')
 const { body } = require('express-validator');
 const usersController = require('../controllers/usersController.js')
-const isAuth = require('../middleware/is-auth');
+const isAuth = require('../modules/middleware/is-auth');
 
 const router = express.Router()
 
-//router.get('/user', isAuth, authController.getUser); //me
+router.get('/me', isAuth, usersController.me);
+router.get('/:id', isAuth, usersController.getUser);
+router.get('/:id/order', isAuth, usersController.getOrderByUserId);
 
+//change my name
 router.patch(
-  '/user/name',
+  '/',
   isAuth,
   [
     body('name')

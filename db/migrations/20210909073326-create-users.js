@@ -21,6 +21,10 @@ module.exports = {
           isEmail: true
         }
       },
+      order_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       password: {
         type: Sequelize.STRING(100),
         allowNull: false

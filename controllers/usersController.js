@@ -1,17 +1,6 @@
-const passport = require('../modules/passport.js')
-const { checkSchema, validationResult } = require('express-validator')
-const config = require('../config/config.js')
-const jwt = require('jsonwebtoken')
-const error = require('../modules/services.js').makeError
+const User = require('../models/users');
 
-
-
-
-
-
-
-
-exports.getUser = (req, res, next) => {
+exports.me = (req, res, next) => {
   User.findByPk(req.userId)
       .then(user => {
         if (!user) {
@@ -25,7 +14,7 @@ exports.getUser = (req, res, next) => {
           "email": user.email,
           "createdAt": user.createdAt,
         };
-        res.status(200).json({ user: userObj });
+        res.status(200).json(userObj);
       })
       .catch(err => {
         if (!err.statusCode) {
@@ -33,6 +22,30 @@ exports.getUser = (req, res, next) => {
         }
         next(err);
       });
+};
+
+exports.getUser = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            if (!user) {
+                const error = new Error('User not found.');
+                error.statusCode = 404;
+                throw error;
+            }
+            userObj = {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "createdAt": user.createdAt,
+            };
+            res.status(200).json(userObj);
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
 };
 
 exports.updateUserName = (req, res, next) => {
@@ -57,3 +70,7 @@ exports.updateUserName = (req, res, next) => {
         next(err);
       });
 };
+
+exports.getOrderByUserId = (req, res, next) => {
+    //todo
+}
