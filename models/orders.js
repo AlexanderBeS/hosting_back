@@ -4,14 +4,14 @@ const User = require('../models/users');
 const Tariff = require('../models/hostingTariffs');
 
 const Order = db.define('orders', {
-        // user_id: {
-        //     type: Sequelize.NUMBER,
-        //     allowNull: false,
-        // },
-        // tariff_id: {
-        //     type: Sequelize.NUMBER,
-        //     allowNull: false,
-        // },
+        user_id: {
+            type: Sequelize.NUMBER,
+            allowNull: false,
+        },
+        tariff_id: {
+            type: Sequelize.NUMBER,
+            allowNull: false,
+        },
     },
     {
         createdAt: true,

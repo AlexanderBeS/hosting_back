@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db/db-connection.js')
-const Order = require('../models/orders');
 
 const User = db.define('users', {
         name: {

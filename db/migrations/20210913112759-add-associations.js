@@ -12,31 +12,33 @@ module.exports = {
             },
             onDelete: 'cascade',
             onUpdate: 'set null'
-        }).then(() => {
-            return queryInterface.addConstraint('orders', {
-                fields: ['user_id'],
-                type: 'foreign key',
-                name: 'order_user_id',
-                references: {
-                    table: 'users',
-                    field: 'id'
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade'
+        })
+            .then(() => {
+                return queryInterface.addConstraint('orders', {
+                    fields: ['user_id'],
+                    type: 'foreign key',
+                    name: 'order_user_id',
+                    references: {
+                        table: 'users',
+                        field: 'id'
+                    },
+                    onDelete: 'cascade',
+                    onUpdate: 'cascade'
+                })
             })
-        }).then(() => {
-            return queryInterface.addConstraint('orders', {
-                fields: ['tariff_id'],
-                type: 'foreign key',
-                name: 'order_tariff_id',
-                references: {
-                    table: 'hosting_tariffs',
-                    field: 'id'
-                },
-                onDelete: 'cascade',
-                onUpdate: 'cascade'
-            })
-        });
+            .then(() => {
+                return queryInterface.addConstraint('orders', {
+                    fields: ['tariff_id'],
+                    type: 'foreign key',
+                    name: 'order_tariff_id',
+                    references: {
+                        table: 'hosting_tariffs',
+                        field: 'id'
+                    },
+                    onDelete: 'cascade',
+                    onUpdate: 'cascade'
+                })
+            });
     },
 
     down: async (queryInterface, Sequelize) => {

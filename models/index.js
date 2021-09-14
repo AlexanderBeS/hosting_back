@@ -18,4 +18,4 @@ User.hasOne(Order, {
     foreignKey: 'order_id', sourceKey: 'id'
 })
 
-module.export = {User}
+module.export = {User, Order, HostingTariffs}
