@@ -1,21 +1,21 @@
-const User = require('/models/users');
-const Order = require('/models/orders');
-const HostingTariffs = require('/models/hostingTariffs');
+const User = require('./users');
+const Order = require('./orders');
+const HostingTariff = require('./hostingTariffs');
 
-Order.hasOne(HostingTariffs, {
-    foreignKey: 'tariff_id'
-});
-
+// Order.hasOne(HostingTariffs, {
+//     foreignKey: 'tariff_id'
+// });
+//
 User.hasOne(Order, {
-    foreignKey: 'order_id', sourceKey: 'id'
+    foreignKey: 'id', sourceKey: 'order_id'
 })
 
 Order.belongsTo(User, {
     foreignKey: 'user_id'
 });
+//
+// Order.hasOne(User, {
+//     foreignKey: 'user_id'
+// })
 
-User.hasOne(Order, {
-    foreignKey: 'order_id', sourceKey: 'id'
-})
-
-module.export = {User, Order, HostingTariffs}
+module.exports = { User, Order, HostingTariff }

@@ -5,9 +5,8 @@ const isAuth = require('../modules/middleware/is-auth');
 
 const router = express.Router()
 
-router.get('/me', isAuth, usersController.me);
-router.get('/:id', isAuth, usersController.getUser);
-router.get('/:id/order', isAuth, usersController.getOrderByUserId);
+router.get('/:userId', isAuth, usersController.getUser);
+router.get('/:userId/orders', isAuth, usersController.getOrdersByUserId);
 
 //change my name
 router.patch(

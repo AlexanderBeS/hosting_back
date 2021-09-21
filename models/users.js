@@ -20,7 +20,7 @@ const User = db.define('users', {
         },
         order_id: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     },
     {
