@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.get('/:userId', isAuth, usersController.getUser);
 router.get('/:userId/orders', isAuth, usersController.getOrdersByUserId);
+router.get('/:userId/orders/active', isAuth, usersController.getActiveOrder);
 
 //change my name
 router.patch(

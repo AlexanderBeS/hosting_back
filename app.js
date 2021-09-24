@@ -9,10 +9,10 @@ const path = require('path')
 const cors = require('cors')
 const pathToStatic = path.join(__dirname, '../../dist')
 
-const usersRouter = require('./routes/usersRoutes.js')
+const usersRoutes = require('./routes/usersRoutes.js')
 const authRoutes = require('./routes/authRoutes');
-const tariffRoutes = require('./routes/tariffRoutes');
-const orderRoutes = require('./routes/orderRoutes');
+const tariffRoutes = require('./routes/tariffsRoutes');
+const orderRoutes = require('./routes/ordersRoutes');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -23,7 +23,7 @@ app.use(passport.initialize())
 app.use(checkConnectionDB)
 
 app.use('/api/auth', authRoutes);
-app.use('/api/users', usersRouter);
+app.use('/api/users', usersRoutes);
 app.use('/api/tariffs', tariffRoutes);
 app.use('/api/orders', orderRoutes);
 

@@ -7,15 +7,20 @@ const HostingTariff = require('./hostingTariffs');
 // });
 //
 User.hasOne(Order, {
-    foreignKey: 'id', sourceKey: 'order_id'
+    foreignKey: 'id', sourceKey: 'order_id', as: 'ActiveOrder'
 })
 
-Order.belongsTo(User, {
-    foreignKey: 'user_id'
-});
-//
-// Order.hasOne(User, {
+User.hasMany(Order, {
+    foreignKey: 'user_id', sourceKey: 'id'
+})
+
+// Order.belongsTo(User, {
 //     foreignKey: 'user_id'
+// });
+
+
+// Order.hasOne(User, {
+//     foreignKey: 'user_id', sourceKey: 'user_id'
 // })
 
 module.exports = { User, Order, HostingTariff }
