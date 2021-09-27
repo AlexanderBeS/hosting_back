@@ -8,7 +8,12 @@
     "start": "nodemon app.js",
     "migrate": "cross-env NODE_ENV=local npx sequelize-cli db:migrate",
     "seed": "cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
-    "restartDB": "cross-env NODE_ENV=local npx sequelize-cli db:drop && cross-env NODE_ENV=local npx sequelize-cli db:create && cross-env NODE_ENV=local npx sequelize-cli db:migrate && cross-env NODE_ENV=local npx sequelize-cli db:seed:all"
+    "restartDB": "cross-env NODE_ENV=local npx sequelize-cli db:drop && cross-env NODE_ENV=local npx sequelize-cli db:create && cross-env NODE_ENV=local npx sequelize-cli db:migrate && cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
+
+    "ebDeploy" : "eb deploy",
+    "deploy": "aws s3 sync . s3://node-hosting --delete --profile hosting",
+    "postdeploy": "aws cloudfront create-invalidation --distribution-id E3Q9ULBH3NZVWP --paths \"/*\" --profile hosting"
+
   },
   "repository": {
     "type": "git",
