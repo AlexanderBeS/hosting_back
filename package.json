@@ -13,7 +13,7 @@
 
     "ebDeploy" : "eb deploy",
     "deploy": "aws s3 sync . s3://node-hosting --delete --profile hosting",
-    "postdeploy": "cross-env NODE_ENV=deploy npx sequelize-cli db:drop && cross-env NODE_ENV=deploy npx sequelize-cli db:create && cross-env NODE_ENV=deploy npx sequelize-cli db:migrate && cross-env NODE_ENV=deploy npx sequelize-cli db:seed:all"
+    "restart_db_prod": "cross-env NODE_ENV=deploy npx sequelize-cli db:drop && cross-env NODE_ENV=deploy npx sequelize-cli db:create && cross-env NODE_ENV=deploy npx sequelize-cli db:migrate && cross-env NODE_ENV=deploy npx sequelize-cli db:seed:all"
   },
   "repository": {
     "type": "git",
