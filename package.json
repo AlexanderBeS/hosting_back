@@ -6,19 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "serve": "node app.js",
+    "serve": "cross-env NODE_ENV=deploy node app.js",
     "migrate": "cross-env NODE_ENV=local npx sequelize-cli db:migrate",
     "seed": "cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
-    "restartDB": "cross-env NODE_ENV=local npx sequelize-cli db:drop && cross-env NODE_ENV=local npx sequelize-cli db:create && cross-env NODE_ENV=local npx sequelize-cli db:migrate && cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
+    "restart_db_local": "cross-env NODE_ENV=local npx sequelize-cli db:drop && cross-env NODE_ENV=local npx sequelize-cli db:create && cross-env NODE_ENV=local npx sequelize-cli db:migrate && cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
 
+    "aws_deploy" : "eb deploy",
     "aws_create_db": "cross-env NODE_ENV=deploy npx sequelize-cli db:create",
     "aws_migrate": "cross-env NODE_ENV=deploy npx sequelize-cli db:migrate",
     "aws_seed": "cross-env NODE_ENV=deploy npx sequelize-cli db:seed:all",
 
-
-    "ebDeploy" : "eb deploy",
-    "deploy": "aws s3 sync . s3://node-hosting --delete --profile hosting",
-    "restart_db_prod": "cross-env NODE_ENV=deploy npx sequelize-cli db:drop && cross-env NODE_ENV=deploy npx sequelize-cli db:create && cross-env NODE_ENV=deploy npx sequelize-cli db:migrate && cross-env NODE_ENV=deploy npx sequelize-cli db:seed:all"
   },
   "repository": {
     "type": "git",
