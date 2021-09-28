@@ -14,7 +14,7 @@
     "aws_deploy" : "eb deploy",
     "aws_create_db": "cross-env NODE_ENV=deploy npx sequelize-cli db:create",
     "aws_migrate": "cross-env NODE_ENV=deploy npx sequelize-cli db:migrate",
-    "aws_seed": "cross-env NODE_ENV=deploy npx sequelize-cli db:seed:all",
+    "aws_seed": "cross-env NODE_ENV=deploy npx sequelize-cli db:seed:all"
 
   },
   "repository": {
