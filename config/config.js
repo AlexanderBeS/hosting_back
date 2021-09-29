@@ -1,6 +1,6 @@
 const db = require('./db-config.js')
-//const mode = process.env.NODE_ENV || 'local'
-const mode = process.env.NODE_ENV || 'prod'
+const mode = process.env.NODE_ENV || 'local'
+//const mode = process.env.NODE_ENV || 'prod'
 
 const config = {
     local: {
