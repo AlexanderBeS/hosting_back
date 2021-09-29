@@ -1,5 +1,5 @@
 module.exports = {
-    deploy: {
+    prod: {
         username: 'root',
         password: 'rootroot',
         database: 'hosting',
