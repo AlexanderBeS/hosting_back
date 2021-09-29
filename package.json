@@ -11,11 +11,9 @@
     "seed": "cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
     "restart_db_local": "cross-env NODE_ENV=local npx sequelize-cli db:drop && cross-env NODE_ENV=local npx sequelize-cli db:create && cross-env NODE_ENV=local npx sequelize-cli db:migrate && cross-env NODE_ENV=local npx sequelize-cli db:seed:all",
 
-    "aws_deploy" : "eb deploy",
     "aws_create_db": "cross-env NODE_ENV=prod npx sequelize-cli db:create",
     "aws_migrate": "cross-env NODE_ENV=prod npx sequelize-cli db:migrate",
     "aws_seed": "cross-env NODE_ENV=prod npx sequelize-cli db:seed:all"
-
   },
   "repository": {
     "type": "git",
