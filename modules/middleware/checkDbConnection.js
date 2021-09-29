@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
     })
     .catch(err => {
       if (err) {
-        return res.status(500).json('Miss connection to database.')
+        return res.status(500).json(process.env.NODE_ENV + 'Miss connection to database.')
       }
     })
 }
